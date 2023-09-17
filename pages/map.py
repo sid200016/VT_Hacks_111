@@ -13,7 +13,7 @@ from PIL import Image
 
 # list of functions
 def gpt_Response(input):
-    API_KEY = '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'
+    API_KEY = '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'
     openai.api_key = API_KEY
     response = openai.Completion.create(engine = "text-davinci-001", prompt = input, max_tokens = 1000, temperature = 0.3)
     resp = response["choices"][0]["text"]
