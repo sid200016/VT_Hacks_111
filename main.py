@@ -5,34 +5,37 @@ import streamlit.components.v1 as components
 from PIL import Image
 import tensorflow as tf
 
+# Libraries for ML model
+import numpy as np
+import pandas as pd
+import tensorflow as tf
+
+
 # Tensorflow Libraries
 from tensorflow import keras
-from tensorflow.keras import layers,models
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.layers import Dense, Dropout
-from tensorflow.keras.callbacks import Callback, EarlyStopping,ModelCheckpoint
-from tensorflow.keras import Model
-from tensorflow.keras.layers.experimental import preprocessing
-from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.applications.xception import preprocess_input
 
 st.set_page_config(page_title="my webpage", page_icon=":smiley:")
-st.markdown('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">', unsafe_allow_html=True)
+st.markdown(
+    '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">',
+    unsafe_allow_html=True)
+
+
 # add a navigation bar on top of teh webpage using streamlit
 # Define the pages
 def home_page():
     st.title("Invasive Insight")
     st.write("This is the home page of this application.")
 
+
 def about_page():
     st.title("About Page")
     st.write("This is the about page of this application.")
 
+
 def contact_page():
     st.title("Contact Page")
     st.write("This is the contact page of this application.")
-
-
 
 
 # Define the navigation bar
@@ -44,9 +47,6 @@ navbar = '''
          <a href="#contact" style= "color: black; font-size: 25px">Know more </a>|
     </div>
 '''
-
-
-
 
 components.html(
     """
@@ -209,16 +209,16 @@ function showSlides() {
 )
 
 try:
- 
+
     from enum import Enum
     from io import BytesIO, StringIO
     from typing import Union
- 
+
     import pandas as pd
     import streamlit as st
 except Exception as e:
     print(e)
- 
+
 STYLE = """
 <style>
 img {
@@ -226,13 +226,52 @@ img {
 }
 </style>
 """
- 
- 
+
+def pre_process(uploaded_image):
+    uploaded_image = uploaded_image.resize((224, 224))
+    uploaded_image = np.array(uploaded_image)
+    uploaded_image = preprocess_input(uploaded_image)
+    uploaded_image = np.expand_dims(uploaded_image, axis=0)
+
+    return uploaded_image
+
+def classify_img(uploaded_image):
+    # Load the .h5 model file
+    model = tf.keras.models.load_model(r"C:\Users\HP\VTHacks\VT_Hacks_111\my_model.h5")
+
+    # Pre Process the uploaded Image
+    uploaded_image = pre_process(uploaded_image)
+
+    # Assuming you have obtained predictions from the model
+    predictions = model.predict(uploaded_image)
+
+    # Define the threshold value
+    threshold = 0.5  # Adjust this threshold as needed
+
+    if np.max(predictions) <= threshold:
+        # Classify as "Non-Invasive" (last category)
+        return "Non-Invasive"
+    else:
+        # Classify based on the other categories
+        category = predictions.argmax()
+        if category == 0:
+            return "Chinese Mitten Crab"
+        elif category == 1:
+            return "Rusty Crayfish"
+        elif category == 2:
+            return "Sirex Wood Wasp"
+        elif category == 3:
+            return "Spotted Lanternfly"
+        elif category == 4:
+            return "Zebra Mussel"
+
+
+
 class FileUpload(object):
- 
+
     def __init__(self):
         self.fileTypes = ["csv", "png", "jpg"]
- 
+
     def run(self):
         """
         Upload File on Streamlit Code
@@ -249,57 +288,18 @@ class FileUpload(object):
         if isinstance(file, BytesIO):
             # Display the uploaded image
             img = Image.open(file)
-            show_file.image(img, caption="Uploaded Image", use_column_width=True)
+            text = classify_img(img)
+            show_file.image(img, caption=text, use_column_width=True)
         else:
             data = pd.read_csv(file)
             st.dataframe(data.head(10))
         file.close()
- 
- 
-if __name__ ==  "__main__":
+
+
+if __name__ == "__main__":
     helper = FileUpload()
     helper.run()
 
-def Classify_img(uploaded_image):
-    # Load the .h5 model file
-    model = tf.keras.models.load_model('./my_model.h5')
-
-    # Pre Process the uploaded Image
-    uploaded_image = pre_process(uploaded_image)
-
-    # Assuming you have obtained predictions from the model
-    predictions = model.predict(uploaded_image)
-
-    # Define the threshold value
-    threshold = 0.5  # Adjust this threshold as needed
-
-    if np.max(predictions) <= threshold:
-        # Classify as "Non-Invasive" (last category)
-        print("Non-Invasive")
-    else:
-        # Classify based on the other categories
-        category = predictions.argmax()
-        if category == 0:
-            print("Spotted Lanternfly")
-        elif category == 1:
-            print("Zebra Mussel")
-        elif category == 2:
-            print("Sirex Wood Wasp")
-        elif category == 3:
-            print("Rusty Crayfish")
-        elif category == 4:
-            print("Chinese Mitten Crab")
-
-
-
-def pre_process(uploaded_img):
-    uploaded_image = uploaded_image.resize((224, 224))
-    uploaded_image = np.array(uploaded_image)
-    uploaded_image = preprocess_input(uploaded_image)
-    uploaded_image = np.expand_dims(uploaded_image, axis=0)
-
-    return uploaded_img
-    
 
 
 
@@ -308,14 +308,14 @@ url = 'https://stackoverflow.com'
 st.markdown(f'''
 <a href={url}><button style="background-color:GreenYellow; font-size: 30px; border-radius: 30px">Check out Map Data</button></a>
 ''',
-unsafe_allow_html=True)
+            unsafe_allow_html=True)
 
 url = 'https://stackoverflow.com'
 
 st.markdown(f'''
 <a href={url}><button style="background-color:GreenYellow; font-size: 30px; border-radius: 30px">Know more about Invasive species</button></a>
 ''',
-unsafe_allow_html=True)
+            unsafe_allow_html=True)
 st.markdown(navbar, unsafe_allow_html=True)
 # Navigation Logic
 
@@ -333,4 +333,3 @@ else:
     home_page()  # Default is home
 with open("style.css") as source:
     st.markdown(f"<style>{source.read()}</style>", unsafe_allow_html=True)
-
