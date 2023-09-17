@@ -8,11 +8,12 @@ import pandas as pd
 import string
 import streamlit.components.v1 as components
 import openai
+import os
 from PIL import Image
 
 # list of functions
 def gpt_Response(input):
-    API_KEY = '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'
+    API_KEY = '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'
     openai.api_key = API_KEY
     response = openai.Completion.create(engine = "text-davinci-001", prompt = input, max_tokens = 1000, temperature = 0.3)
     resp = response["choices"][0]["text"]
@@ -170,7 +171,14 @@ with col3:
     
 with col5:
     if(species != "" and species != "Please choose one"):
-        temp = 'C:/Users/HP/VTHacks/VT_Hacks_111/pages/' + species +'.jpg'
+        # Get the directory of the current script (map.py)
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+
+
+        # Construct the full path to the image
+        image_path = os.path.join(script_dir, species)
+        temp = image_path+'.jpg'
+        print(temp)
         image =Image.open(temp)
         st.image(image, caption="")
 
