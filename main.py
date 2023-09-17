@@ -5,6 +5,7 @@ import streamlit.components.v1 as components
 from PIL import Image
 import tensorflow as tf
 import requests
+from streamlit_option_menu import option_menu
 
 # Libraries for ML model
 import numpy as np
@@ -51,6 +52,19 @@ st.markdown(
     '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">',
     unsafe_allow_html=True)
 
+# Define the navigation bar
+# horizontal menu
+selected2 = option_menu(None, ["Home", "Map data ", "Know more"],
+    icons=['house', 'geo-alt', "list-task", 'person-raised-hand'],
+    menu_icon="cast", default_index=0, orientation="horizontal",
+    styles={
+        "nav-link-selected": {"background-color": "#286e15"},
+    }
+    )
+
+
+
+
 location_hash = st.experimental_get_query_params().get("nav", None)
 if location_hash:
     location_hash = location_hash[0]
@@ -64,6 +78,13 @@ elif location_hash == 'contact':
 else:
     home_page()  # Default is home
 
+
+
+
+
+
+
+
 # Lottie
 lottie_coding = load_lottieurl('https://lottie.host/515560b6-b5ea-45d4-a8ed-788ef12f64c4/sHcIqQux0Z.json')
 # Position the Lottie animation
@@ -74,20 +95,16 @@ lottie_coding = load_lottieurl('https://lottie.host/515560b6-b5ea-45d4-a8ed-788e
 # Create columns with custom spacing
 # Create columns with custom spacing
 # Apply custom CSS to color the container
-background_color = "#FF5733"  # Example: Hex color code for orange
 
 
 with st.container():
-    left_column_width = 500
-    left_column,mid_col, right_column = st.columns(3,gap = "large")
+    left_column, right_column = st.columns((2,1))
     with left_column:
         st.write('#')
-        st.markdown('<div style="text-align: center;">Did you know?</div>', unsafe_allow_html=True)
-    with mid_col:
-        st.write('#')
-        st.write("Economists estimate that invasive species cost the United States more than $120 billion in damages annuall")
+        st.markdown('<div style="text-align: left;margin-left:5px; background-color:#042601;">&emsp;&emsp;&emsp;&emsp;Did you know?&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Economists estimate that invasive species cost the United States &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;more than $120 billion in damages</div>', unsafe_allow_html=True)
     with right_column:
         st_lottie(lottie_coding, height=100, key="coding")
+st.write("##")
 
 # Partition the stuff
 with st.container():
@@ -272,19 +289,6 @@ An invasive species is an introduced, nonnative organism (disease, parasite, pla
         )
 
 
-
-
-# Define the navigation bar
-navbar = '''
-    <div style="position: fixed; z-index: 999; top: 40px; left: 50px;width: 90%;background-color: #AEF971;padding:10px;font-family:sans-serif; font-size: 28px">
-        <a href="#home" style= "color: black; font-size: 25px">Home</a> |
-        <a href="#about" style= "color: black; font-size: 25px">Map Data</a> |
-        <a href="#contact" style= "color: black; font-size: 25px">Identify Invasive species</a>|
-         <a href="#contact" style= "color: black; font-size: 25px">Know more </a>|
-    </div>
-'''
-
-
 try:
 
     from enum import Enum
@@ -294,7 +298,7 @@ try:
     import pandas as pd
     import streamlit as st
 except Exception as e:
-    print(e)
+    print(e,"err")
 
 STYLE = """
 <style>
@@ -383,17 +387,15 @@ if __name__ == "__main__":
 url = 'https://stackoverflow.com'
 
 st.markdown(f'''
-<a href={url}><button style="background-color:GreenYellow; font-size: 30px; border-radius: 30px">Check out Map Data</button></a>
+<a href={url}><button style="background-color:GreenYellow; font-size: 20px; border-radius: 30px">Check out Map Data</button></a>
 ''',
             unsafe_allow_html=True)
 
 url = 'https://stackoverflow.com'
 
 st.markdown(f'''
-<a href={url}><button style="background-color:GreenYellow; font-size: 30px; border-radius: 30px">Know more about Invasive species</button></a>
-''',
-            unsafe_allow_html=True)
-st.markdown(navbar, unsafe_allow_html=True)
+<a href={url}><button style="background-color:GreenYellow; font-size: 20px; border-radius: 30px">Know more about Invasive species</button></a>
+''', unsafe_allow_html=True)
 # Navigation Logic
 
 
