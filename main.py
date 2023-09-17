@@ -3,6 +3,8 @@ import streamlit as st
 import pandas as pd
 import streamlit.components.v1 as components
 from PIL import Image
+from tensorflow.keras.applications.xception import preprocess_input
+import tensorflow as tf
 
 st.set_page_config(page_title="my webpage", page_icon=":smiley:")
 st.markdown('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">', unsafe_allow_html=True)
@@ -248,10 +250,45 @@ if __name__ ==  "__main__":
     helper = FileUpload()
     helper.run()
 
+def Classify_img(uploaded_image):
+    # Load the .h5 model file
+    model = tf.keras.models.load_model('./my_model.h5')
+
+    # Pre Process the uploaded Image
+    uploaded_image = pre_process(uploaded_image)
+
+    # Assuming you have obtained predictions from the model
+    predictions = model.predict(uploaded_image)
+
+    # Define the threshold value
+    threshold = 0.5  # Adjust this threshold as needed
+
+    if np.max(predictions) <= threshold:
+        # Classify as "Non-Invasive" (last category)
+        print("Non-Invasive")
+    else:
+        # Classify based on the other categories
+        category = predictions.argmax()
+        if category == 0:
+            print("Spotted Lanternfly")
+        elif category == 1:
+            print("Zebra Mussel")
+        elif category == 2:
+            print("Sirex Wood Wasp")
+        elif category == 3:
+            print("Rusty Crayfish")
+        elif category == 4:
+            print("Chinese Mitten Crab")
 
 
 
+def pre_process(uploaded_img):
+    uploaded_image = uploaded_image.resize((224, 224))
+    uploaded_image = np.array(uploaded_image)
+    uploaded_image = preprocess_input(uploaded_image)
+    uploaded_image = np.expand_dims(uploaded_image, axis=0)
 
+    return uploaded_img
     
 
 
