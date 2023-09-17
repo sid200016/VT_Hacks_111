@@ -51,19 +51,6 @@ st.markdown(
     '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">',
     unsafe_allow_html=True)
 
-# Define the navigation bar
-# horizontal menu
-st.sidebar.success("Select a page above")
-# selected2 = option_menu(None, ["Home", "Map data ", "Know more"],
-#     icons=['house', 'geo-alt', "list-task", 'person-raised-hand'],
-#     menu_icon="cast", default_index=0, orientation="horizontal",
-#     styles={
-#         "nav-link-selected": {"background-color": "#286e15"},
-#     }
-#     )
-
-
-
 
 location_hash = st.experimental_get_query_params().get("nav", None)
 if location_hash:
@@ -96,6 +83,7 @@ lottie_coding = load_lottieurl('https://lottie.host/515560b6-b5ea-45d4-a8ed-788e
 # Create columns with custom spacing
 # Apply custom CSS to color the container
 
+st.sidebar.success("select")
 
 with st.container():
     left_column, right_column = st.columns((2,1))
@@ -317,7 +305,7 @@ def pre_process(uploaded_image):
 
 def classify_img(uploaded_image):
     # Load the .h5 model file
-    model = tf.keras.models.load_model(r"C:\Users\HP\VTHacks\VT_Hacks_111\my_model.h5")
+    model = tf.keras.models.load_model(".\my_model.h5")
 
     # Pre Process the uploaded Image
     uploaded_image = pre_process(uploaded_image)
@@ -396,5 +384,3 @@ st.markdown(f'''
 # Navigation Logic
 
 
-with open(r"C:\Users\HP\VTHacks\VT_Hacks_111\style.css") as source:
-    st.markdown(f"<style>{source.read()}</style>", unsafe_allow_html=True)

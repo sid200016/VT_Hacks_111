@@ -12,7 +12,7 @@ from PIL import Image
 
 # list of functions
 def gpt_Response(input):
-    API_KEY = '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'
+    API_KEY = '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'
     openai.api_key = API_KEY
     response = openai.Completion.create(engine = "text-davinci-001", prompt = input, max_tokens = 1000, temperature = 0.3)
     resp = response["choices"][0]["text"]
@@ -170,8 +170,9 @@ with col3:
     
 with col5:
     if(species != "" and species != "Please choose one"):
-        temp = species+".jpg"
+        temp = 'C:/Users/sidas/OneDrive/Documents/GitHub/VT_Hacks_111/purv_map_python/' + species +'.jpg'
         image =Image.open(temp)
         st.image(image, caption="")
+
     
 
