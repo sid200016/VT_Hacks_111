@@ -72,7 +72,7 @@ aquamap["Chinese Mystery Snail (Cipangopaludina chinensis)"] = "59309"
 aquamap["Goldfish (Carassius auratus)"]="15299"
 aquamap["Asian Carp (Hypophthalmichthys spp.)"] = "12248"
 aquamap["Asian Swamp Eel"] = "12245"
-st.set_page_config(page_title="Streamlit App", page_icon=":smiley:", layout="wide")
+st.set_page_config(page_title="Streamlit App", page_icon=":world_map:", layout="wide")
 
 i = False
 species = ""

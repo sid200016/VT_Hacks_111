@@ -5,6 +5,7 @@ import streamlit.components.v1 as components
 from PIL import Image
 import tensorflow as tf
 import requests
+import os
 from streamlit_option_menu import option_menu
 
 # Libraries for ML model
@@ -46,7 +47,7 @@ def load_lottieurl(url):
 
 
 # Streamlit stuff goes here.
-st.set_page_config(page_title="my webpage", page_icon="home",layout = "wide")
+st.set_page_config(page_title="my webpage", page_icon=":house:",layout = "wide")
 st.markdown(
     '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">',
     unsafe_allow_html=True)
@@ -305,7 +306,11 @@ def pre_process(uploaded_image):
 
 def classify_img(uploaded_image):
     # Load the .h5 model file
-    model = tf.keras.models.load_model(".\my_model.h5")
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Construct the full path to the image
+    image_path = os.path.join(script_dir, "my_model.h5")
+    model = tf.keras.models.load_model(image_path)
 
     # Pre Process the uploaded Image
     uploaded_image = pre_process(uploaded_image)
@@ -369,14 +374,13 @@ if __name__ == "__main__":
 
 
 
-url = 'https://stackoverflow.com'
+# url = 'https://devpost.com/software/invasive-insight?ref_content=user-portfolio&ref_feature=in_progress'
+#
+# st.markdown(f'''
+# <a href={url}><button style="background-color:GreenYellow; font-size: 20px; border-radius: 30px">Check out our DevPost</button></a>
+# ''',unsafe_allow_html=True)
 
-st.markdown(f'''
-<a href={url}><button style="background-color:GreenYellow; font-size: 20px; border-radius: 30px">Check out Map Data</button></a>
-''',
-            unsafe_allow_html=True)
-
-url = 'https://stackoverflow.com'
+url = 'http://www.iucngisd.org/gisd/'
 
 st.markdown(f'''
 <a href={url}><button style="background-color:GreenYellow; font-size: 20px; border-radius: 30px">Know more about Invasive species</button></a>
