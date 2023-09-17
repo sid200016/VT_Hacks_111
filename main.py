@@ -15,10 +15,184 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras.applications.xception import preprocess_input
 
+# Streamlit stuff goes here.
 st.set_page_config(page_title="my webpage", page_icon=":smiley:")
 st.markdown(
     '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">',
     unsafe_allow_html=True)
+
+# Partition the stuff
+with st.container():
+    st.write("---")
+    left_column, right_column = st.columns(2)
+    with left_column:
+        st.write(
+            """
+            An invasive species is an organism that is not indigenous, 
+            or native, to a particular area. Invasive species can cause 
+            great economic and environmental harm to the new area.
+            """
+        )
+    with right_column:
+        components.html(
+            """
+        <!DOCTYPE html>
+        <html>
+        <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        * {box-sizing: border-box;}
+        body {font-family: Verdana, sans-serif;}
+        .mySlides {display: none;}
+        img {vertical-align: middle;}
+
+        /* Slideshow container */
+        .slideshow-container {
+          max-width: 1000px;
+          position: relative;
+          margin: auto;
+        }
+
+        /* Caption text */
+        .text {
+          color: black;
+          font-size: 28px;
+          padding: 8px 12px;
+          position: absolute;
+          bottom: 8px;
+          width: 100%;
+          text-align: center;
+        }
+
+        /* Number text (1/3 etc) */
+        .numbertext {
+          color: #f2f2f2;
+          font-size: 12px;
+          padding: 8px 12px;
+          position: absolute;
+          top: 0;
+        }
+
+        /* The dots/bullets/indicators */
+        .dot {
+          height: 15px;
+          width: 15px;
+          margin: 0 2px;
+          background-color: #bbb;
+          border-radius: 50%;
+          display: inline-block;
+          transition: background-color 0.6s ease;
+        }
+
+        .company_name{
+            color: white;
+            font-family: Helvetica;
+            font-size: 40px;
+        }
+
+        .tagline{
+            color: white;
+            font-family: Helvetica;
+            font-size: 20px;
+        }
+
+        .active {
+          background-color: #717171;
+        }
+
+        /* Fading animation */
+        .fade {
+          animation-name: fade;
+          animation-duration: 1.5s;
+        }
+
+        @keyframes fade {
+          from {opacity: .4} 
+          to {opacity: 1}
+        }
+
+        /* On smaller screens, decrease text size */
+        @media only screen and (max-width: 300px) {
+          .text {font-size: 11px}
+        }
+        </style>
+        </head>
+        <body>
+
+        <h2 class="company_name">Invasive Insight</h2>
+        <p class="tagline">Guarding Nature: Your Guide to Invasive Species Awareness</p>
+
+        <div class="slideshow-container">
+
+        <div class="mySlides fade">
+          <div class="numbertext">1 / 5</div>
+          <img src="https://cals.cornell.edu/sites/default/files/styles/hero_landing_desktop/public/2021-07/0728_lanternfly2.jpeg?h=c74750f6&itok=4lJ5ktcT" style="width:100%">
+          <div class="text">Spotted Lanternfly</div>
+        </div>
+
+        <div class="mySlides fade">
+          <div class="numbertext">2 / 5</div>
+          <img src="https://d32ogoqmya1dw8.cloudfront.net/images/eyesinthesky2/week5/small_zebra_mussel_image.jpg" style="width:100%">
+          <div class="text">Zebra Mussel</div>
+        </div>
+
+        <div class="mySlides fade">
+          <div class="numbertext">3 / 5</div>
+          <img src="https://entnemdept.ufl.edu/creatures/misc/wasps/Sirex_noctilio01.jpg" style="width:100%">
+          <div class="text">Sirex Wood Wasp</div>
+        </div>
+
+        <div class="mySlides fade">
+          <div class="numbertext">4 / 5</div>
+          <img src="https://extension.umn.edu/sites/extension.umn.edu/files/rustycrayfish_inset1.jpg" style="width:100%">
+          <div class="text">Rusty Crayfish</div>
+        </div>
+
+        <div class="mySlides fade">
+          <div class="numbertext">5 / 5</div>
+          <img src="https://www.researchgate.net/publication/338661038/figure/fig1/AS:848488678035456@1579306873511/Chinese-mitten-crab-Eriocheir-japonica-sinensis.png">
+          <div class="text">Chinese Mitten Crab</div>
+        </div>
+
+        </div>
+        <br>
+
+        <div style="text-align:center">
+          <span class="dot"></span> 
+          <span class="dot"></span> 
+          <span class="dot"></span> 
+          <span class="dot"></span> 
+          <span class="dot"></span> 
+        </div>
+
+        <script>
+        let slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+          let i;
+          let slides = document.getElementsByClassName("mySlides");
+          let dots = document.getElementsByClassName("dot");
+          for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+          }
+          slideIndex++;
+          if (slideIndex > slides.length) {slideIndex = 1}    
+          for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+          }
+          slides[slideIndex-1].style.display = "block";  
+          dots[slideIndex-1].className += " active";
+          setTimeout(showSlides, 2500); // Change image every 2 seconds
+        }
+        </script>
+
+        </body>
+        </html> 
+
+            """,
+            height=600,
+        )
 
 
 # add a navigation bar on top of teh webpage using streamlit
@@ -48,165 +222,6 @@ navbar = '''
     </div>
 '''
 
-components.html(
-    """
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-* {box-sizing: border-box;}
-body {font-family: Verdana, sans-serif;}
-.mySlides {display: none;}
-img {vertical-align: middle;}
-
-/* Slideshow container */
-.slideshow-container {
-  max-width: 1000px;
-  position: relative;
-  margin: auto;
-}
-
-/* Caption text */
-.text {
-  color: black;
-  font-size: 28px;
-  padding: 8px 12px;
-  position: absolute;
-  bottom: 8px;
-  width: 100%;
-  text-align: center;
-}
-
-/* Number text (1/3 etc) */
-.numbertext {
-  color: #f2f2f2;
-  font-size: 12px;
-  padding: 8px 12px;
-  position: absolute;
-  top: 0;
-}
-
-/* The dots/bullets/indicators */
-.dot {
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-  transition: background-color 0.6s ease;
-}
-
-.company_name{
-    color: white;
-    font-family: Helvetica;
-    font-size: 40px;
-}
-
-.tagline{
-    color: white;
-    font-family: Helvetica;
-    font-size: 20px;
-}
-
-.active {
-  background-color: #717171;
-}
-
-/* Fading animation */
-.fade {
-  animation-name: fade;
-  animation-duration: 1.5s;
-}
-
-@keyframes fade {
-  from {opacity: .4} 
-  to {opacity: 1}
-}
-
-/* On smaller screens, decrease text size */
-@media only screen and (max-width: 300px) {
-  .text {font-size: 11px}
-}
-</style>
-</head>
-<body>
-
-<h2 class="company_name">Invasive Insight</h2>
-<p class="tagline">Guarding Nature: Your Guide to Invasive Species Awareness</p>
-
-<div class="slideshow-container">
-
-<div class="mySlides fade">
-  <div class="numbertext">1 / 5</div>
-  <img src="https://cals.cornell.edu/sites/default/files/styles/hero_landing_desktop/public/2021-07/0728_lanternfly2.jpeg?h=c74750f6&itok=4lJ5ktcT" style="width:100%">
-  <div class="text">Spotted Lanternfly</div>
-</div>
-
-<div class="mySlides fade">
-  <div class="numbertext">2 / 5</div>
-  <img src="https://d32ogoqmya1dw8.cloudfront.net/images/eyesinthesky2/week5/small_zebra_mussel_image.jpg" style="width:100%">
-  <div class="text">Zebra Mussel</div>
-</div>
-
-<div class="mySlides fade">
-  <div class="numbertext">3 / 5</div>
-  <img src="https://entnemdept.ufl.edu/creatures/misc/wasps/Sirex_noctilio01.jpg" style="width:100%">
-  <div class="text">Sirex Wood Wasp</div>
-</div>
-
-<div class="mySlides fade">
-  <div class="numbertext">4 / 5</div>
-  <img src="https://extension.umn.edu/sites/extension.umn.edu/files/rustycrayfish_inset1.jpg" style="width:100%">
-  <div class="text">Rusty Crayfish</div>
-</div>
-
-<div class="mySlides fade">
-  <div class="numbertext">5 / 5</div>
-  <img src="https://www.researchgate.net/publication/338661038/figure/fig1/AS:848488678035456@1579306873511/Chinese-mitten-crab-Eriocheir-japonica-sinensis.png">
-  <div class="text">Chinese Mitten Crab</div>
-</div>
-
-</div>
-<br>
-
-<div style="text-align:center">
-  <span class="dot"></span> 
-  <span class="dot"></span> 
-  <span class="dot"></span> 
-  <span class="dot"></span> 
-  <span class="dot"></span> 
-</div>
-
-<script>
-let slideIndex = 0;
-showSlides();
-
-function showSlides() {
-  let i;
-  let slides = document.getElementsByClassName("mySlides");
-  let dots = document.getElementsByClassName("dot");
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";  
-  }
-  slideIndex++;
-  if (slideIndex > slides.length) {slideIndex = 1}    
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex-1].style.display = "block";  
-  dots[slideIndex-1].className += " active";
-  setTimeout(showSlides, 2500); // Change image every 2 seconds
-}
-</script>
-
-</body>
-</html> 
-
-    """,
-    height=600,
-)
 
 try:
 
@@ -331,5 +346,5 @@ elif location_hash == 'contact':
     contact_page()
 else:
     home_page()  # Default is home
-with open("style.css") as source:
+with open(r"C:\Users\HP\VTHacks\VT_Hacks_111\style.css") as source:
     st.markdown(f"<style>{source.read()}</style>", unsafe_allow_html=True)
