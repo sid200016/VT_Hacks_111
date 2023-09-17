@@ -9,6 +9,15 @@ import string
 import streamlit.components.v1 as components
 import openai
 # list of functions
+def gpt_Response(input):
+    API_KEY = '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'
+    openai.api_key = API_KEY
+    response = openai.Completion.create(engine = "text-davinci-001", prompt = input, max_tokens = 1000, temperature = 0.3)
+    resp = response["choices"][0]["text"]
+    return resp
+        
+
+
 def display_map(value):
     gmap='<iframe src="https://maps.eddmaps.org/google/eradication.cfm?notitle&&subjectnumber='+value+'&country=926&lat=39.8283&lng=-98.5795&zoom=5" frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" height="500" width="700" scrolling="no"></iframe>'
     return gmap
@@ -117,7 +126,6 @@ if choice == 'insects':
         another_main_container.markdown(tvalue, unsafe_allow_html=True)
 
 
-
 if choice == 'plants':
     plant = main_container.selectbox(
     'Select the plant you want learn about?',
@@ -139,14 +147,14 @@ if choice == 'aquatic':
         another_main_container.markdown(tvalue, unsafe_allow_html=True)
 
 
+col1,col2 = st.columns(2)
+
+with col1:
+    prompt = "Give a brief description of: " + value + " and its impact on the environment"
+    answer = gpt_Response(prompt)
+    st.write(answer)
 
 # function to just take the value and display the map         
 
-API_KEY = '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'
-openai.api_key = API_KEY
-prom = "tell me more about the why brown stink bug is an invasive species"
-response = openai.Completion.create(engine = "text-davinci-001", prompt = prom, max_tokens = 1000)
-a= response["choices"][0]["text"]
-print(a)
-                         
+               
 
