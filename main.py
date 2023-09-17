@@ -23,7 +23,7 @@ from tensorflow.keras.applications.xception import preprocess_input
 # add a navigation bar on top of teh webpage using streamlit
 # Define the pages
 def home_page():
-    st.markdown('<div style="font-size:40px ;color:white;font-family:Helvetica;">Invasive Insight</div>', unsafe_allow_html=True)
+    st.markdown('<div style="font-size:60px ;text-align:center;color:white;font-family:Helvetica;">Invasive Insight</div>', unsafe_allow_html=True)
     #st.write("This is the home page of this application.")
 
 
@@ -46,20 +46,21 @@ def load_lottieurl(url):
 
 
 # Streamlit stuff goes here.
-st.set_page_config(page_title="my webpage", page_icon=":smiley:",layout = "wide")
+st.set_page_config(page_title="my webpage", page_icon="home",layout = "wide")
 st.markdown(
     '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">',
     unsafe_allow_html=True)
 
 # Define the navigation bar
 # horizontal menu
-selected2 = option_menu(None, ["Home", "Map data ", "Know more"],
-    icons=['house', 'geo-alt', "list-task", 'person-raised-hand'],
-    menu_icon="cast", default_index=0, orientation="horizontal",
-    styles={
-        "nav-link-selected": {"background-color": "#286e15"},
-    }
-    )
+st.sidebar.success("Select a page above")
+# selected2 = option_menu(None, ["Home", "Map data ", "Know more"],
+#     icons=['house', 'geo-alt', "list-task", 'person-raised-hand'],
+#     menu_icon="cast", default_index=0, orientation="horizontal",
+#     styles={
+#         "nav-link-selected": {"background-color": "#286e15"},
+#     }
+#     )
 
 
 
@@ -102,7 +103,7 @@ with st.container():
         st.write('#')
         st.markdown('<div style="text-align: left;margin-left:5px; background-color:#042601;">&emsp;&emsp;&emsp;&emsp;Did you know?&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Economists estimate that invasive species cost the United States &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;more than $120 billion in damages</div>', unsafe_allow_html=True)
     with right_column:
-        st_lottie(lottie_coding, height=100, key="coding")
+        st_lottie(lottie_coding, height=150, key="coding")
 st.write("##")
 
 # Partition the stuff
