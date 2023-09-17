@@ -68,7 +68,7 @@ aquamap["Eurasian Watermilfoil"] = "3055"
 aquamap["lionfish"] = "12249"
 aquamap["Rusty Crayfish (Faxonius rusticus)"] = "87669"
 aquamap["Chinese Mystery Snail (Cipangopaludina chinensis)"] = "59309"
-aquamap["Goldfish (Carassius auratus)"]="15299"
+aquamap["Goldfish (Carassius auratus"]="15299"
 aquamap["Asian Carp (Hypophthalmichthys spp.)"] = "12248"
 aquamap["Asian Swamp Eel"] = "12245"
 st.set_page_config(page_title="Streamlit App", page_icon=":smiley:", layout="wide")
@@ -92,7 +92,7 @@ with col2:
     st.markdown("<h1 style='text-align: center; color: #286E15;'>LETS LEARN!!</h1>", unsafe_allow_html=True)
     choice = st.selectbox(
     'Select the species you want learn about?',
-    ('Please choose one','animal','insects','plants','aquatic'))
+    ('Please choose one','Animal','Insects','Plants','Aquatic'))
     st.write('You selected:', choice)
     main_container = st.container()
     part3_container = st.container()
@@ -161,13 +161,10 @@ if choice == 'aquatic':
 col3,col5 = part3_container.columns(2)
 
 with col3:
-    if (species != ""):
-        prompt = "Give a brief description of: " + species + " and its impact on the environment"
-        answer = gpt_Response(prompt)
-        st.write(answer)
+    prompt = "Give a brief description of: " + species + " and its impact on the environment"
+    answer = gpt_Response(prompt)
+    st.write(answer)
 
-
-    
 with col5:
     if(species != "" and species != "Please choose one"):
         temp = species+".jpg"
