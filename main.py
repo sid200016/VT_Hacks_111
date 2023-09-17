@@ -32,14 +32,13 @@ def about_page():
     st.write("This is the about page of this application.")
 
 
+
 def contact_page():
     st.title("Contact Page")
     st.write("This is the contact page of this application.")
 
 def load_lottieurl(url):
     r = requests.get(url)
-    if r.status_code != 200:
-        return None
     return r.json()
 
 
@@ -290,7 +289,6 @@ An invasive species is an introduced, nonnative organism (disease, parasite, pla
 
 
 try:
-
     from enum import Enum
     from io import BytesIO, StringIO
     from typing import Union
@@ -298,7 +296,7 @@ try:
     import pandas as pd
     import streamlit as st
 except Exception as e:
-    print(e,"err")
+    print(e)
 
 STYLE = """
 <style>
@@ -327,7 +325,7 @@ def classify_img(uploaded_image):
     predictions = model.predict(uploaded_image)
 
     # Define the threshold value
-    threshold = 0.5  # Adjust this threshold as needed
+    threshold = 0.6  # Adjust this threshold as needed
 
     if np.max(predictions) <= threshold:
         # Classify as "Non-Invasive" (last category)
@@ -351,7 +349,7 @@ def classify_img(uploaded_image):
 class FileUpload(object):
 
     def __init__(self):
-        self.fileTypes = ["csv", "png", "jpg"]
+        self.fileTypes = ["png", "jpg"]
 
     def run(self):
         """
@@ -363,18 +361,16 @@ class FileUpload(object):
         file = st.file_uploader("Upload file", type=self.fileTypes)
         show_file = st.empty()
         if not file:
-            show_file.info("Please upload a file of type: " + ", ".join(["csv", "png", "jpg"]))
-            return
-        content = file.getvalue()
+            show_file.info("Please upload a file of type: " + ", ".join(["png", "jpg"]))
+
         if isinstance(file, BytesIO):
             # Display the uploaded image
             img = Image.open(file)
             text = classify_img(img)
-            show_file.image(img, caption=text, use_column_width=True)
-        else:
-            data = pd.read_csv(file)
-            st.dataframe(data.head(10))
-        file.close()
+            show_file.image(img, use_column_width=True)
+            st.markdown(f'<div style="text-align: center;font-size:30px;font-family:serif;">{text}</div>', unsafe_allow_html=True)
+            st.write("##")
+            file.close()
 
 
 if __name__ == "__main__":
