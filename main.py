@@ -4,33 +4,102 @@ import pandas as pd
 import streamlit.components.v1 as components
 from PIL import Image
 import tensorflow as tf
+import requests
 
 # Libraries for ML model
 import numpy as np
 import pandas as pd
 import tensorflow as tf
 
+from streamlit_lottie import st_lottie
+
 
 # Tensorflow Libraries
 from tensorflow import keras
 from tensorflow.keras.applications.xception import preprocess_input
 
+# Code for the home, about, contact
+# add a navigation bar on top of teh webpage using streamlit
+# Define the pages
+def home_page():
+    st.markdown('<div style="font-size:40px ;color:white;font-family:Helvetica;">Invasive Insight</div>', unsafe_allow_html=True)
+    #st.write("This is the home page of this application.")
+
+
+def about_page():
+    st.title("About Page")
+    st.write("This is the about page of this application.")
+
+
+def contact_page():
+    st.title("Contact Page")
+    st.write("This is the contact page of this application.")
+
+def load_lottieurl(url):
+    r = requests.get(url)
+    if r.status_code != 200:
+        return None
+    return r.json()
+
+
+
+
+
 # Streamlit stuff goes here.
-st.set_page_config(page_title="my webpage", page_icon=":smiley:")
+st.set_page_config(page_title="my webpage", page_icon=":smiley:",layout = "wide")
 st.markdown(
     '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">',
     unsafe_allow_html=True)
 
+location_hash = st.experimental_get_query_params().get("nav", None)
+if location_hash:
+    location_hash = location_hash[0]
+
+if location_hash == 'home':
+    home_page()
+elif location_hash == 'about':
+    about_page()
+elif location_hash == 'contact':
+    contact_page()
+else:
+    home_page()  # Default is home
+
+# Lottie
+lottie_coding = load_lottieurl('https://lottie.host/515560b6-b5ea-45d4-a8ed-788ef12f64c4/sHcIqQux0Z.json')
+# Position the Lottie animation
+# Create a Streamlit container
+
+# Place the Lottie animation within the container
+# Place the Lottie animation in the right column
+# Create columns with custom spacing
+# Create columns with custom spacing
+# Apply custom CSS to color the container
+background_color = "#FF5733"  # Example: Hex color code for orange
+
+
+with st.container():
+    left_column_width = 500
+    left_column,mid_col, right_column = st.columns(3,gap = "large")
+    with left_column:
+        st.write('#')
+        st.markdown('<div style="text-align: center;">Did you know?</div>', unsafe_allow_html=True)
+    with mid_col:
+        st.write('#')
+        st.write("Economists estimate that invasive species cost the United States more than $120 billion in damages annuall")
+    with right_column:
+        st_lottie(lottie_coding, height=100, key="coding")
+
 # Partition the stuff
 with st.container():
-    st.write("---")
     left_column, right_column = st.columns(2)
     with left_column:
+        st.write("##")
+        st.write("##")
+        st.write("##")
+
         st.write(
             """
-            An invasive species is an organism that is not indigenous, 
-            or native, to a particular area. Invasive species can cause 
-            great economic and environmental harm to the new area.
+An invasive species is an introduced, nonnative organism (disease, parasite, plant, or animal) that begins to spread or expand its range from the site of its original introduction and that has the potential to cause harm to the environment, the economy, or to human health. Invasive species are spread primarily by human activities, often unintentionally. People, and goods transported, travel quickly around the world, and often carry uninvited species with them. The introduction and establishment of invasive species to the U.S. (intentional or unintentional) can pose a significant threat to native and plant communities. Invasive species can lead to the extinction of native plants and animals, destroy biodiversity, and permanently alter habitats.
             """
         )
     with right_column:
@@ -56,6 +125,15 @@ with st.container():
         /* Caption text */
         .text {
           color: black;
+          font-size: 28px;
+          padding: 8px 12px;
+          position: absolute;
+          bottom: 8px;
+          width: 100%;
+          text-align: center;
+        }       
+        .text1 {
+          color: white;
           font-size: 28px;
           padding: 8px 12px;
           position: absolute;
@@ -119,8 +197,7 @@ with st.container():
         </head>
         <body>
 
-        <h2 class="company_name">Invasive Insight</h2>
-        <p class="tagline">Guarding Nature: Your Guide to Invasive Species Awareness</p>
+        <p class="tagline">Guarding Nature: Your Guide to Invasive Species</p>
 
         <div class="slideshow-container">
 
@@ -150,8 +227,8 @@ with st.container():
 
         <div class="mySlides fade">
           <div class="numbertext">5 / 5</div>
-          <img src="https://www.researchgate.net/publication/338661038/figure/fig1/AS:848488678035456@1579306873511/Chinese-mitten-crab-Eriocheir-japonica-sinensis.png">
-          <div class="text">Chinese Mitten Crab</div>
+          <img src="https://featuredcreature.com/wp-content/uploads/2012/11/tumblr_mclsu7252N1qzou5ko1_5002.jpg">
+          <div class="text1">Chinese Mitten Crab</div>
         </div>
 
         </div>
@@ -195,21 +272,6 @@ with st.container():
         )
 
 
-# add a navigation bar on top of teh webpage using streamlit
-# Define the pages
-def home_page():
-    st.title("Invasive Insight")
-    st.write("This is the home page of this application.")
-
-
-def about_page():
-    st.title("About Page")
-    st.write("This is the about page of this application.")
-
-
-def contact_page():
-    st.title("Contact Page")
-    st.write("This is the contact page of this application.")
 
 
 # Define the navigation bar
@@ -334,17 +396,6 @@ st.markdown(f'''
 st.markdown(navbar, unsafe_allow_html=True)
 # Navigation Logic
 
-location_hash = st.experimental_get_query_params().get("nav", None)
-if location_hash:
-    location_hash = location_hash[0]
 
-if location_hash == 'home':
-    home_page()
-elif location_hash == 'about':
-    about_page()
-elif location_hash == 'contact':
-    contact_page()
-else:
-    home_page()  # Default is home
 with open(r"C:\Users\HP\VTHacks\VT_Hacks_111\style.css") as source:
     st.markdown(f"<style>{source.read()}</style>", unsafe_allow_html=True)
