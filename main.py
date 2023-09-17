@@ -2,6 +2,7 @@ from pkg_resources import SOURCE_DIST
 import streamlit as st
 import pandas as pd
 import streamlit.components.v1 as components
+from PIL import Image
 
 st.set_page_config(page_title="my webpage", page_icon=":smiley:")
 st.markdown('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">', unsafe_allow_html=True)
@@ -234,7 +235,9 @@ class FileUpload(object):
             return
         content = file.getvalue()
         if isinstance(file, BytesIO):
-            show_file.image(file)
+            # Display the uploaded image
+            img = Image.open(file)
+            show_file.image(img, caption="Uploaded Image", use_column_width=True)
         else:
             data = pd.read_csv(file)
             st.dataframe(data.head(10))
